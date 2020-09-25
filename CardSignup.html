@@ -257,7 +257,7 @@
                             </div>
 
 
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 <div class="form-input mt-15">
                                     <label>Type of ID</label>
                                     <div style="text-align: center;" class="input-items default">
@@ -278,8 +278,8 @@
 
 
 
-                            </div>
-                            <div class="col-md-12">
+                            </div> -->
+                            <!-- <div class="col-md-12">
                                 <div class="form-input mt-15">
                                     <label>ID Number</label>
                                     <div class="input-items default">
@@ -296,7 +296,7 @@
                                         <i class="lni-paperclip"></i>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-2"></div>
                             <div class="col-md-8">
                                 <div class="form-input mt-20">
@@ -332,12 +332,12 @@
         e.preventDefault()
         const body = new FormData(document.getElementById('candidate-signup'))
 
-            const fileBase64 = await toBase64(body.get('file1'))
-            if(fileBase64 !== "data:") {body.set('file1', fileBase64)} else {
-                body.delete('file1')
-            }
-
-            console.log('fileBase64: ', fileBase64);
+            // const fileBase64 = await toBase64(body.get('file1'))
+            // if(fileBase64 !== "data:") {body.set('file1', fileBase64)} else {
+            //     body.delete('file1')
+            // }
+            // console.log('fileBase64: ', fileBase64);
+            
         console.log('body: ', body)
         fetch(scriptURL, {
                 method: 'POST',
