@@ -139,7 +139,7 @@
                                 <div class="form-input mt-15">
                                     <label>Nominee Name</label>
                                     <div class="input-items default">
-                                        <input name="nominee_name" type="text" placeholder="Name" required="">
+                                        <input name="nominee_name" type="text" placeholder="Name">
                                         <i class="lni-user"></i>
                                     </div>
                                 </div>
@@ -185,7 +185,7 @@
                                 <div class="form-input mt-15">
                                     <label>Whatsapp No.</label>
                                     <div class="input-items default">
-                                        <input name="whatsapp" type="text" placeholder="Phone" required="">
+                                        <input name="whatsapp" type="text" placeholder="Phone" >
                                         <i class="lni-mobile"></i>
                                     </div>
                                 </div>
@@ -223,7 +223,7 @@
                                 <div class="form-input mt-15">
                                     <label>Block</label>
                                     <div class="input-items default">
-                                        <input name="block" type="text" required="" placeholder="">
+                                        <input name="block" type="text"  placeholder="">
                                         <i class="lni-link"></i>
                                     </div>
                                 </div>
@@ -292,7 +292,7 @@
                                 <div class="form-input mt-15">
                                     <label>Photo of the ID</label>
                                     <div class="input-items default">
-                                        <input required="" id="file1" name="file1" type="file" style="padding: 5px;">
+                                        <input id="file1" name="file1" type="file" style="padding: 5px;">
                                         <i class="lni-paperclip"></i>
                                     </div>
                                 </div>
@@ -321,7 +321,7 @@
             const reader = new FileReader()
             reader.readAsDataURL(file)
             reader.onload = () => resolve(reader.result)
-            reader.onerror = error => reject(error)
+            reader.onerror = error => resolve(false)
         })
 
     const scriptURL =
@@ -331,8 +331,13 @@
     form.addEventListener('submit', async e => {
         e.preventDefault()
         const body = new FormData(document.getElementById('candidate-signup'))
-        const fileBase64 = await toBase64(body.get('file1'))
-        body.set('file1', fileBase64)
+
+            const fileBase64 = await toBase64(body.get('file1'))
+            if(fileBase64 !== "data:") {body.set('file1', fileBase64)} else {
+                body.delete('file1')
+            }
+
+            console.log('fileBase64: ', fileBase64);
         console.log('body: ', body)
         fetch(scriptURL, {
                 method: 'POST',
