@@ -110,163 +110,78 @@
 </head>
 
 
-
-<section style="padding-top: 0px;" class="signin-area signin-one " id="signup">
-<div style="display: flex; justify-content:space-evenly;">
-    <div style="text-align: right;">
-        <a href="https://harishydav.github.io/orgite/CardSignup.html">
-            <button class="main-btn rounded-two">
-            New Card</button>
-        </a>
-
-    </div>
-    <div style="text-align: left;">
-        <a href="https://harishydav.github.io/orgite/CardSignup.html">
-            <button class="main-btn rounded-two">
-            Discount</button>
-        </a>
-
-    </div>
-
-</div>
+<section style="padding-top: 20px;" class="signin-area signin-one " id="signup">
     <div class="container">
         <div class="row justify-content-center">
-
-
             <div class="col-lg-5">
-                <form id="candidate-signup" action="#">
+                <form id="form-id" action="#">
                     <div class="signin-form form-style-two rounded-buttons">
                         <div class="col-md-12">
-                            <label style="font-size: 30px; text-align: center;">Consultation Data</label>
+                            <label style="font-size: 30px; text-align: center;">Discount Data</label>
                         </div>
+
 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-input mt-15">
-                                    <label>Date </label>
+                                    <label>Date</label>
                                     <div class="input-items default">
-                                        <input style="padding-right: 10px;" name="consultation_date" type="date">
+                                        <input name="consultation_date" type="date" placeholder="" required="">
                                     </div>
                                 </div>
-
+                            </div>
+                        <div class="col-md-12">
+                            <div class="form-input mt-15">
+                                <label>Patient Name</label>
+                                <div class="input-items default">
+                                    <input name="name" type="date" required="">
+                                </div>
+                            </div>
+                        </div>
+                            <div class="col-md-12">
                                 <div class="form-input mt-15">
                                     <label>Card Number</label>
                                     <div class="input-items default">
-                                        <input name="card_number" type="text" placeholder="" required>
+                                        <input name="card_number" type="text" placeholder="">
                                         <i class="lni-user"></i>
                                     </div>
                                 </div>
                                 <div class="form-input mt-15">
-                                    <label>Name</label>
+                                    <label>Treatment Procedure</label>
                                     <div class="input-items default">
-                                        <input name="name" type="text" placeholder="Name" required="">
+                                        <input name="procedure" type="text" placeholder="" >
                                         <i class="lni-user"></i>
                                     </div>
                                 </div>
                                 <div class="form-input mt-15">
-                                    <label>Sex</label>
-                                    <div style="text-align: center;" class="input-items default">
-                                        <select id="sex" name="sex" style="
-                                        padding: 10px;
-                                        padding-left: 50px;
-                                        padding-right: 50px;
-                                        font-size: 20px;
-                                    ">
-                                        <option value="M">Male</option>
-                                        <option value="F">Female</option>
-                                        <option value="Others">Others</option>
-                                        </select>
+                                    <label>Treatment Cost (before discount)</label>
+                                    <div class="input-items default">
+                                        <input name="before_discount" type="text" placeholder="" required>
+                                        <i class="lni-user"></i>
+                                    </div>
+                                </div>
+                                <div class="form-input mt-15">
+                                    <label>Discount Offered</label>
+                                    <div class="input-items default">
+                                        <input name="discount" type="text" placeholder="" required>
+                                        <i class="lni-user"></i>
+                                    </div>
+                                </div>
+                                <div class="form-input mt-15">
+                                    <label>Cost after Discount</label>
+                                    <div class="input-items default">
+                                        <input name="post_discount" type="text" placeholder="" required>
+                                        <i class="lni-user"></i>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-input mt-15">
-                                    <label>Phone</label>
-                                    <div class="input-items default">
-                                        <input name="phone" type="text" placeholder="Phone">
-                                        <i class="lni-mobile"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-input mt-15">
-                                    <label>Address</label>
-                                    <div class="input-items default">
-                                        <input name="address" type="text" placeholder="Address">
-                                        <i class="lni-home"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-input mt-15">
-                                    <label>Patient Complaint</label>
-                                    <div class="input-items default">
-                                        <input name="complaints" type="text" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-input mt-15">
-                                    <label>Revisit Date </label>
-                                    <div class="input-items default">
-                                        <input style="padding-right: 10px;" name="revisit_date" type="date" placeholder="" required>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-input mt-15">
-                                    <label>Prescription period</label>
-                                    <div class="input-items default">
-                                        <input name="prescription_period" type="text" required="" placeholder="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-input mt-15">
-                                    <label>Referred to</label>
-                                    <div class="input-items default">
-                                        <input id="referred_to" type="text" style="padding: 5px;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-input mt-15">
-                                    <label>Photo of the OPD Slip</label>
-                                    <div class="input-items default">
-                                        <input required="" id="file1" name="file1" type="file" accept="image/*" capture="camera" style="padding: 5px;">
-                                        <i class="lni-paperclip"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-input mt-15">
-                                    <label>Where did you hear about us</label>
-                                    <div style="text-align: center;" class="input-items default">
-                                        <select id="channel" name="channel" style="
-                                        padding: 10px;
-                                        padding-left: 50px;
-                                        padding-right: 50px;
-                                        font-size: 20px;
-                                    ">
-                                        <option value="regular">Regular Patient</option>
-                                        <option value="repeat">Follow up Visit</option>
-                                        <option value="recommendation">Someone recommended the doctor</option>
-                                        <option value="card_discount">Interested in the card discounts </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                          
-
-
-
+                            </div> 
                             <div class="col-md-2"></div>
                             <div class="col-md-8">
                                 <div class="form-input mt-20">
                                     <button class="main-btn rounded-two" type="submit">
-                        Submit
+                        Register
                       </button>
                                 </div>
                             </div>
@@ -286,18 +201,23 @@
             const reader = new FileReader()
             reader.readAsDataURL(file)
             reader.onload = () => resolve(reader.result)
-            reader.onerror = error => reject(error)
+            reader.onerror = error => resolve(false)
         })
 
     const scriptURL =
-        'https://script.google.com/macros/s/AKfycbxbb6g5a4wMqUVhMYw8wOWmtowpLOoDJyyKu-JUZqJkwEnq1DA/exec'
-    const form = document.getElementById('candidate-signup')
+        'https://script.google.com/macros/s/AKfycbwLp5wvAKKw9u2RwkXvv70t-ekNCe1BdWGODeaIEA/exec'
+    const form = document.getElementById('form-id')
 
     form.addEventListener('submit', async e => {
         e.preventDefault()
-        const body = new FormData(document.getElementById('candidate-signup'))
-        const fileBase64 = await toBase64(body.get('file1'))
-        body.set('file1', fileBase64)
+        const body = new FormData(document.getElementById('form-id'))
+
+            // const fileBase64 = await toBase64(body.get('file1'))
+            // if(fileBase64 !== "data:") {body.set('file1', fileBase64)} else {
+            //     body.delete('file1')
+            // }
+            // console.log('fileBase64: ', fileBase64);
+            
         console.log('body: ', body)
         fetch(scriptURL, {
                 method: 'POST',
@@ -305,7 +225,8 @@
             })
             .then(response => {
                 console.log('response: ', response);
-                document.getElementById('candidate-signup').reset()
+                document.getElementById('form-id').reset()
+                window.location.href = "https://harishydav.github.io/orgite"
                 alert('Successful')
             })
             .catch(error => {
