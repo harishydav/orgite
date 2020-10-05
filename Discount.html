@@ -114,7 +114,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-5">
-                <form id="form-id" action="#">
+                <form id="data-form" action="#">
                     <div class="signin-form form-style-two rounded-buttons">
                         <div class="col-md-12">
                             <label style="font-size: 30px; text-align: center;">Discount Data</label>
@@ -141,8 +141,8 @@
 
                             <div class="form-input mt-15">
                                 <label>Patient Name</label>
-                                <div class="input-items default">
-                                    <input name="name" type="text" required="">
+                                <div id="name-field" class="input-items default">
+                                    <input id="name" name="name" type="text" required="">
                                 </div>
                             </div>
                         </div>
@@ -207,12 +207,12 @@
 
     const scriptURL =
         'https://script.google.com/macros/s/AKfycbwLp5wvAKKw9u2RwkXvv70t-ekNCe1BdWGODeaIEA/exec'
-    const form = document.getElementById('form-id')
+    const form = document.getElementById('data-form')
     form.elements.namedItem('consultation_date').value = new Date().toISOString().slice(0,10);
 
     form.addEventListener('submit', async e => {
         e.preventDefault()
-        const body = new FormData(document.getElementById('form-id'))
+        const body = new FormData(document.getElementById('data-form'))
 
             // const fileBase64 = await toBase64(body.get('file1'))
             // if(fileBase64 !== "data:") {body.set('file1', fileBase64)} else {
@@ -227,7 +227,7 @@
             })
             .then(response => {
                 console.log('response: ', response);
-                document.getElementById('form-id').reset()
+                document.getElementById('data-form').reset()
                 window.location.href = "https://harishydav.github.io/orgite"
                 alert('Successful')
             })
@@ -250,7 +250,19 @@
                         form.elements.namedItem(key).value = cardInfo[key]
                     }
                 })
-                console.log('formData: ', Object.fromEntries(formData));
+
+                const nameList = [cardInfo.name, ...cardInfo.nominee_name.split(',').filter(x=>x)].map(x => x.toUpperCase())
+                console.log('nameList: ', nameList);
+
+                document.getElementById("name-field").innerHTML =   nameList.reduce((acc, nextItem,index) => acc + `<option value="${nextItem}">${nextItem}</option>`  ,`<select id="name" name="name" style="
+                                        padding: 10px;
+                                        padding-left: 50px;
+                                        padding-right: 50px;
+                                        font-size: 20px;
+                                        ">`) + `</select>`
+
+                                        console.log('formData: ', Object.fromEntries(formData));
+
             }
         }
     }
