@@ -233,7 +233,7 @@
     })
     const cardFetch = async (e) => {
         const  cardNumber  = e.target.value
-        if (cardNumber.length > 5) {
+        if (cardNumber.length > 11) {
             const {data} = await fetch(`https://script.google.com/macros/s/AKfycbySLLbbHWhL91Wj1_W-5WtQSfHWB_LtDXu8D9cZrwQ5Sgkvf5iH/exec?card_number=${cardNumber}`).then(x => x.json())
             const [cardInfo] = data
             if(cardInfo){
