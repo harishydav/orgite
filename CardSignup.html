@@ -337,7 +337,7 @@
     const scriptURL =
         'https://script.google.com/macros/s/AKfycbySLLbbHWhL91Wj1_W-5WtQSfHWB_LtDXu8D9cZrwQ5Sgkvf5iH/exec'
     const form = document.getElementById('data-form')
-    form.elements.namedItem('consultation_date').value = new Date().toISOString().slice(0,10);
+    form.elements.namedItem('registration_date').value = new Date().toISOString().slice(0,10);
 
     form.addEventListener('submit', async e => {
         e.preventDefault()
