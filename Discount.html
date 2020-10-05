@@ -132,6 +132,14 @@
                             </div>
                         <div class="col-md-12">
                             <div class="form-input mt-15">
+                                <label>Card Number</label>
+                                <div class="input-items default">
+                                    <input oninput="cardFetch(event)" name="card_number" type="text" placeholder="" required>
+                                    <i class="lni-user"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-input mt-15">
                                 <label>Patient Name</label>
                                 <div class="input-items default">
                                     <input name="name" type="text" required="">
@@ -139,13 +147,6 @@
                             </div>
                         </div>
                             <div class="col-md-12">
-                                <div class="form-input mt-15">
-                                    <label>Card Number</label>
-                                    <div class="input-items default">
-                                        <input name="card_number" type="text" placeholder="">
-                                        <i class="lni-user"></i>
-                                    </div>
-                                </div>
                                 <div class="form-input mt-15">
                                     <label>Treatment Procedure</label>
                                     <div class="input-items default">
@@ -207,6 +208,7 @@
     const scriptURL =
         'https://script.google.com/macros/s/AKfycbwLp5wvAKKw9u2RwkXvv70t-ekNCe1BdWGODeaIEA/exec'
     const form = document.getElementById('form-id')
+    form.elements.namedItem('consultation_date').value = new Date().toISOString().slice(0,10);
 
     form.addEventListener('submit', async e => {
         e.preventDefault()
@@ -234,6 +236,24 @@
                 console.error('Error!', error.message)
             })
     })
+    const cardFetch = async (e) => {
+        const  cardNumber  = e.target.value
+        if (cardNumber.length > 5) {
+            const {data} = await fetch(`https://script.google.com/macros/s/AKfycbySLLbbHWhL91Wj1_W-5WtQSfHWB_LtDXu8D9cZrwQ5Sgkvf5iH/exec?card_number=${cardNumber}`).then(x => x.json())
+            const [cardInfo] = data
+            if(cardInfo){
+                const formData = new FormData(form)
+                console.log('body: ', Object.fromEntries(formData));
+                console.log('cardInfo: ', cardInfo);
+                Object.keys(cardInfo).map(key => {
+                    if(formData.has(key)){
+                        form.elements.namedItem(key).value = cardInfo[key]
+                    }
+                })
+                console.log('formData: ', Object.fromEntries(formData));
+            }
+        }
+    }
 </script>
 </body>
 
