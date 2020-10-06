@@ -203,6 +203,26 @@
             reader.onerror = error => resolve(false)
         })
 
+        const compressImage = async (imageFile) => {
+            console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+            console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+            
+            const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 1920,
+                useWebWorker: true
+            }
+            try {
+                const compressedFile = await imageCompression(imageFile, options);
+                console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+                console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+                return compressedFile
+                await uploadToServer(compressedFile); // write your own logic
+            } catch (error) {
+                return error
+            }
+
+        }
     const scriptURL =
         'https://script.google.com/macros/s/AKfycby6kTK3jKiPIUYN8ePaDEnMKkShKYVMvNu3NLDVTw/exec'
     const form = document.getElementById('data-form')
@@ -212,7 +232,8 @@
         e.preventDefault()
         const body = new FormData(document.getElementById('data-form'))
 
-            const fileBase64 = await toBase64(body.get('file1'))
+        const compressedImage = await compressImage(body.get('file1'))
+        const fileBase64 = await toBase64(compressedImage)
             if(fileBase64 !== "data:") {body.set('file1', fileBase64)} else {
                 body.delete('file1')
             }

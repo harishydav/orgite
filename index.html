@@ -278,16 +278,39 @@
         </div>
     </div>
 </section>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
 <script>
     const toBase64 = file =>
         new Promise((resolve, reject) => {
+
+            
             console.log('file: ', file)
             const reader = new FileReader()
             reader.readAsDataURL(file)
             reader.onload = () => resolve(reader.result)
             reader.onerror = error => reject(error)
         })
+
+        const compressImage = async (imageFile) => {
+            console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+            console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+            
+            const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 1920,
+                useWebWorker: true
+            }
+            try {
+                const compressedFile = await imageCompression(imageFile, options);
+                console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+                console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+                return compressedFile
+                await uploadToServer(compressedFile); // write your own logic
+            } catch (error) {
+                return error
+            }
+
+        }
 
         const scriptURL =
             'https://script.google.com/macros/s/AKfycbxbb6g5a4wMqUVhMYw8wOWmtowpLOoDJyyKu-JUZqJkwEnq1DA/exec'
@@ -296,7 +319,8 @@
         form.addEventListener('submit', async e => {
         e.preventDefault()
         const body = new FormData(document.getElementById('data-form'))
-        const fileBase64 = await toBase64(body.get('file1'))
+        const compressedImage = await compressImage(body.get('file1'))
+        const fileBase64 = await toBase64(compressedImage)
         body.set('file1', fileBase64)
         console.log('body: ', body)
         fetch(scriptURL, {
