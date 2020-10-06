@@ -228,7 +228,10 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="col-md-12">
+                                                            <div class="col-md-12">
                                 <div class="form-input mt-15">
                                     <label>Where did you hear about us</label>
                                     <div style="text-align: center;" class="input-items default">
@@ -246,28 +249,27 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-12">
                                 <div class="form-input mt-15">
                                     <label>Photo of the OPD Slip</label>
                                     <div class="input-items default">
-                                        <input required="" id="file1" name="file1" type="file" accept="image/*" capture="camera" style="padding: 5px;">
+                                        <input oninput="handleImageUpload(event)" required="" id="file1" name="file1" type="file" accept="image/*" capture="camera" style="padding: 5px;">
                                         <i class="lni-paperclip"></i>
                                     </div>
                                 </div>
                             </div>
 
 
-                          
-
-
-
+                          <p> time taken </p>
+                        <p id="time-test" > </p>
                             <div class="col-md-2"></div>
                             <div class="col-md-8">
                                 <div class="form-input mt-20">
-                                    <button class="main-btn rounded-two" type="submit">
-                        Submit
-                      </button>
+                                    <div id="spinner" style="display: none;">
+                                        <div style="text-align: center;">
+                                            <div style="width: 5rem; height: 5rem;  " class="spinner-border spinner-border-bg text-primary"></div>
+                                          </div>
+                                    </div>
+                                    <button id = "submit-button" class="main-btn rounded-two" type="submit">Submit</button>
                                 </div>
                             </div>
                             <div class="col-md-12"></div>
@@ -312,6 +314,16 @@
 
         }
 
+        handleImageUpload  =  async (e) => {
+            console.log('e: ', e);
+            const a= Date.now()
+            const body = new FormData(document.getElementById('data-form'))
+            const compressedImage = await compressImage(body.get('file1'))
+            window.compressedBase64 = await toBase64(compressedImage)
+            const b = (Date.now()-a)/1000
+            document.getElementById("time-test").innerText = b + 's'
+            console.log("time taken", b)
+        }
         const scriptURL =
             'https://script.google.com/macros/s/AKfycbxbb6g5a4wMqUVhMYw8wOWmtowpLOoDJyyKu-JUZqJkwEnq1DA/exec'
         const form = document.getElementById('data-form')
@@ -319,17 +331,21 @@
         form.addEventListener('submit', async e => {
         e.preventDefault()
         const body = new FormData(document.getElementById('data-form'))
-        const compressedImage = await compressImage(body.get('file1'))
-        const fileBase64 = await toBase64(compressedImage)
-        body.set('file1', fileBase64)
+        body.set('file1', window.compressedBase64)
         console.log('body: ', body)
+
+        document.getElementById("submit-button").style.display="none"
+        document.getElementById("spinner").style.display="block"
         fetch(scriptURL, {
                 method: 'POST',
                 body
             })
             .then(response => {
+                window.compressedBase64 = undefined
                 console.log('response: ', response);
                 document.getElementById('data-form').reset()
+                document.getElementById("submit-button").style.display="block"
+                document.getElementById("spinner").style.display="none"
                 alert('Successful')
             })
             .catch(error => {
@@ -342,7 +358,6 @@
         if (cardNumber.length > 11) {
             const {data} = await fetch(`https://script.google.com/macros/s/AKfycbySLLbbHWhL91Wj1_W-5WtQSfHWB_LtDXu8D9cZrwQ5Sgkvf5iH/exec?card_number=${cardNumber}`).then(x => x.json())
             const [cardInfo] = data
-
             if(cardInfo){
                 const formData = new FormData(form)
                 console.log('body: ', Object.fromEntries(formData));
@@ -354,16 +369,13 @@
                 })
                 const nameList = [cardInfo.name, ...cardInfo.nominee_name.split(',').filter(x=>x)].map(x => x.toUpperCase())
                 console.log('nameList: ', nameList);
-
                 document.getElementById("name-field").innerHTML =   nameList.reduce((acc, nextItem,index) => acc + `<option value="${nextItem}">${nextItem}</option>`  ,`<select id="name" name="name" style="
                                         padding: 10px;
                                         padding-left: 50px;
                                         padding-right: 50px;
                                         font-size: 20px;
                                         ">`) + `</select>`
-
                 console.log('formData: ', Object.fromEntries(formData));
-
             }
         }
     }

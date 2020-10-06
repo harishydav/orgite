@@ -170,7 +170,7 @@
                                 <div class="form-input mt-15">
                                     <label>Photo of Discount Receipt</label>
                                     <div class="input-items default">
-                                        <input required="" id="file1" name="file1" type="file" accept="image/*" capture="camera" style="padding: 5px;">
+                                        <input required="" oninput="handleImageUpload" id="file1" name="file1" type="file" accept="image/*" capture="camera" style="padding: 5px;">
                                         <i class="lni-paperclip"></i>
                                     </div>
                                 </div>
@@ -192,6 +192,7 @@
         </div>
     </div>
 </section>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
 
 <script>
     const toBase64 = file =>
@@ -223,7 +224,18 @@
             }
 
         }
-    const scriptURL =
+
+        handleImageUpload  =  async (e) => {
+            console.log('e: ', e);
+            const a= Date.now()
+            const body = new FormData(document.getElementById('data-form'))
+            const compressedImage = await compressImage(body.get('file1'))
+            window.compressedBase64 = await toBase64(compressedImage)
+            const b = (Date.now()-a)/1000
+            document.getElementById("time-test").innerText = b + 's'
+            console.log("time taken", b)
+        }
+     const scriptURL =
         'https://script.google.com/macros/s/AKfycby6kTK3jKiPIUYN8ePaDEnMKkShKYVMvNu3NLDVTw/exec'
     const form = document.getElementById('data-form')
     form.elements.namedItem('purchase_date').value = new Date().toISOString().slice(0,10);
@@ -232,19 +244,23 @@
         e.preventDefault()
         const body = new FormData(document.getElementById('data-form'))
 
-        const compressedImage = await compressImage(body.get('file1'))
-        const fileBase64 = await toBase64(compressedImage)
-            if(fileBase64 !== "data:") {body.set('file1', fileBase64)} else {
-                body.delete('file1')
-            }
+        const body = new FormData(document.getElementById('data-form'))
+        body.set('file1', window.compressedBase64)
+        console.log('body: ', body)
+
+        document.getElementById("submit-button").style.display="none"
+        document.getElementById("spinner").style.display="block"
             
         fetch(scriptURL, {
                 method: 'POST',
                 body
             })
             .then(response => {
+                window.compressedBase64 = undefined
                 console.log('response: ', response);
                 document.getElementById('data-form').reset()
+                document.getElementById("submit-button").style.display="block"
+                document.getElementById("spinner").style.display="none"
                 alert('Successful')
             })
             .catch(error => {
