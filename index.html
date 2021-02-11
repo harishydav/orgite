@@ -335,7 +335,7 @@
             console.log("time taken", b)
         }
         const scriptURL =
-            'https://script.google.com/macros/s/AKfycbxbb6g5a4wMqUVhMYw8wOWmtowpLOoDJyyKu-JUZqJkwEnq1DA/exec'
+            'https://script.google.com/macros/s/AKfycbymKu--imNdtS1k8I7tcORjxf4ZBy8GE4avxuyeKGEzolNe1Jtn9Rmz2w/exec'
         const form = document.getElementById('data-form')
         form.elements.namedItem('consultation_date').value = new Date().toISOString().slice(0,10);
         form.addEventListener('submit', async e => {
@@ -366,7 +366,7 @@
     const cardFetch = async (e) => {
         const  cardNumber  = e.target.value
         if (cardNumber.length > 11) {
-            const {data} = await fetch(`https://script.google.com/macros/s/AKfycbymKu--imNdtS1k8I7tcORjxf4ZBy8GE4avxuyeKGEzolNe1Jtn9Rmz2w/exec?card_number=${cardNumber}`).then(x => x.json())
+            const {data} = await fetch(`https://script.google.com/macros/s/AKfycby0-U7mRCna4jaOho3jKue1FTeQA-nioAq7SBZXGlRzYNhz8FQR-BEE/exec?card_number=${cardNumber}`).then(x => x.json())
             const [cardInfo] = data
             if(cardInfo){
                 const formData = new FormData(form)
